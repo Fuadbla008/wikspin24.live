@@ -1,3 +1,4 @@
+<!-- file: login.html -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,137 +6,214 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        .container {
-            max-width: 400px;
-            margin: 30px auto;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            background-image: url('./imgi_11_velki-bg-login.webp');
+        body,
+        html {
+            height: 100%;
+            font-family: Arial, sans-serif;
         }
 
-        .banner {
-            background: #ffcc00;
+        body {
+            background: url('./bacground-image.webp') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 620px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 8px;
+        }
+
+        .login-wrapper h2 {
             text-align: center;
-            padding: 15px;
-        }
-
-        .banner img {
-            max-width: 100%;
-        }
-
-        .form-box {
-            padding: 25px;
-        }
-
-        .form-box h2 {
-            text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             position: relative;
         }
 
         .input-group input {
             width: 100%;
-            padding: 10px 35px 10px 40px;
+            padding: 12px 40px 12px 40px;
             border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
+            border-radius: 6px;
+            font-size: 15px;
+            background: #fff;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #ffcc00;
+            box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
         }
 
         .input-group i {
             position: absolute;
             top: 50%;
-            left: 10px;
+            left: 12px;
             transform: translateY(-50%);
-            color: #666;
+            color: #888;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #888;
         }
 
         .validation {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 10px;
         }
 
         .validation input {
             flex: 1;
+            padding-left: 35px;
         }
 
-        .validation span {
-            margin-left: 10px;
+        .captcha {
+            background: #eee;
+            padding: 10px 15px;
+            border-radius: 6px;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 15px;
+            letter-spacing: 2px;
+            user-select: none;
         }
 
         .remember {
-            margin: 10px 0;
+            margin: 12px 0;
             font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .login-btn {
             width: 100%;
             background: #ffcc00;
             border: none;
-            padding: 12px;
-            border-radius: 5px;
+            padding: 14px;
+            border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
             font-weight: bold;
+            transition: background 0.3s;
         }
 
         .login-btn:hover {
             background: #e6b800;
         }
+
+        @media (max-width: 480px) {
+            .login-wrapper {
+                width: 90%;
+                padding: 25px 20px;
+            }
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body>
+<body style="display: flex; flex-direction: column;">
+    <div>
+        <img src="./imgi_3_velki-login-signup-banner.webp" alt="" width="620">
 
-    <div class="container">
-        <div class="banner">
-            <img src="./imgi_3_velki-login-signup-banner.webp" alt="">
-
-        </div>
-
-        <div class="form-box">
-            <h2>LOGIN</h2>
-            <form>
-                <div class="input-group">
-                    <i class="fa fa-user"></i>
-                    <input type="text" placeholder="Username" required>
+    </div>
+    <div class="login-wrapper">
+        <h2>LOGIN</h2>
+        <form id="loginForm" novalidate>
+            <div class="input-group">
+                <i class="fa fa-user"></i>
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <i class="fa fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required minlength="6">
+                <i class="fa fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+            <div class="input-group validation">
+                <div style="flex:1; position:relative;">
+                    <i class="fa fa-shield-alt" style="left:12px;"></i>
+                    <input type="text" id="captchaInput" placeholder="Validation Code" required>
                 </div>
-                <div class="input-group">
-                    <i class="fa fa-lock"></i>
-                    <input type="password" placeholder="Password" required>
-                </div>
-                <div class="input-group validation">
-                    <div style="flex:1; position:relative;">
-                        <i class="fa fa-shield-alt" style="left:10px;"></i>
-                        <input type="text" placeholder="Validation Code" required style="padding-left:35px;">
-                    </div>
-                    <span>3749</span>
-                </div>
-                <div class="remember">
-                    <input type="checkbox"> Remember me
-                </div>
-                <button type="submit" class="login-btn">Login</button>
-            </form>
-        </div>
+                <span class="captcha" id="captchaCode"></span>
+            </div>
+            <div class="remember">
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe">Remember me</label>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
     </div>
 
+    <script>
+        // Generate random captcha
+        function generateCaptcha() {
+            return Math.floor(1000 + Math.random() * 9000);
+        }
+
+        const captchaCode = document.getElementById('captchaCode');
+        let currentCaptcha = generateCaptcha();
+        captchaCode.textContent = currentCaptcha;
+
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+
+        // Form validation
+        const form = document.getElementById('loginForm');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = passwordInput.value.trim();
+            const captchaInput = document.getElementById('captchaInput').value.trim();
+
+            if (!username || !password || !captchaInput) {
+                alert('All fields are required!');
+                return;
+            }
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long!');
+                return;
+            }
+            if (captchaInput !== currentCaptcha.toString()) {
+                alert('Invalid validation code!');
+                currentCaptcha = generateCaptcha();
+                captchaCode.textContent = currentCaptcha;
+                return;
+            }
+            alert('Login successful!');
+            form.reset();
+            currentCaptcha = generateCaptcha();
+            captchaCode.textContent = currentCaptcha;
+        });
+    </script>
 </body>
 
 </html>
